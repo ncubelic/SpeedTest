@@ -175,6 +175,9 @@ public class SpeedTestService {
                             @Override
                             public void run() {
                                 uploadSpeedLabel.setText(""+result+" Mbps");
+                                downloadBtn.setEnabled(true);
+                                uploadDownloadBtn.setEnabled(true);
+                                uploadBtn.setEnabled(true);
                             }
                         });
                     }
@@ -251,6 +254,9 @@ public class SpeedTestService {
                                                     @Override
                                                     public void run() {
                                                         uploadSpeedLabel.setText(""+result+" Mbps");
+                                                        downloadBtn.setEnabled(true);
+                                                        uploadDownloadBtn.setEnabled(true);
+                                                        uploadBtn.setEnabled(true);
                                                     }
                                                 });
                                             }

@@ -1,11 +1,18 @@
 package com.lioncode.speed;
 
+import android.Manifest;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -16,6 +23,7 @@ import com.lioncode.speed.com.lioncode.speed.service.WifiInfoTask;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int PERMISSION_REQUEST_COARSE_LOCATION = 2;
     private Button downloadBtn;
     private Button uploadBtn;
     private Button uploadDownloadBtn;
@@ -42,17 +50,62 @@ public class MainActivity extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
         }
 
-        // Find Wifi info
-        WifiInfoTask wifiInfoTask = new WifiInfoTask(this);
-        wifiInfoTask.execute();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("This app needs location access");
+                builder.setMessage("Please grant location access to use this app.");
+                builder.setPositiveButton(android.R.string.ok, null);
+                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.M)
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
+                    }
+                });
+                builder.show();
+            }
+        }
 
-        // Start cpu usage handler
-        CpuUsageTask cpuUsageTask = new CpuUsageTask(this);
-        cpuUsageTask.start();
     }
 
-    public void runDownloadTest(View view){
-        if(connected){
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_COARSE_LOCATION: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Find Wifi info
+                    WifiInfoTask wifiInfoTask = new WifiInfoTask(this);
+                    wifiInfoTask.execute();
+
+                    // Start cpu usage handler
+                    CpuUsageTask cpuUsageTask = new CpuUsageTask(this);
+                    cpuUsageTask.start();
+
+                } else {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Functionality limited");
+                    builder.setMessage("Since location access has not been granted, this app will not be able to use wifi scan in the background.");
+                    builder.setPositiveButton(android.R.string.ok, null);
+                    builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                        }
+
+                    });
+                    builder.show();
+                }
+                return;
+            }
+        }
+    }
+
+
+    public void runDownloadTest(View view) {
+        if (connected) {
             this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -76,8 +129,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void runUploadTest(View view){
-        if(connected){
+    public void runUploadTest(View view) {
+        if (connected) {
             downloadBtn.setEnabled(false);
             uploadBtn.setEnabled(false);
             uploadDownloadBtn.setEnabled(false);
@@ -96,8 +149,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void runUploadDownloadTest(View view){
-        if(connected){
+    public void runUploadDownloadTest(View view) {
+        if (connected) {
             downloadBtn.setEnabled(false);
             uploadBtn.setEnabled(false);
             uploadDownloadBtn.setEnabled(false);
