@@ -16,6 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Receive Wi-Fi connection state changes -->
+        <receiver android:name=".WifiReceiver">
+            <intent-filter>
+                <!--<action android:name="android.net.wifi.STATE_CHANGE" />-->
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>

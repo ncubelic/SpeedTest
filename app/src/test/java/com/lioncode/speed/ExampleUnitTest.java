@@ -1,5 +1,7 @@
 package com.lioncode.speed;
 
+import com.lioncode.speed.com.lioncode.speed.service.PingService;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -10,8 +12,11 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class ExampleUnitTest {
+
     @Test
-    public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
+    public void arpTest() throws Exception {
+        PingService service = new PingService();
+        String result = service.arp();
+        assertNotEquals("0",result);
     }
 }

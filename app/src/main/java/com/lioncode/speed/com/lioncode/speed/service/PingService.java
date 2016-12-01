@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PingService {
 
@@ -38,6 +40,40 @@ public class PingService {
         float rttFloat = Float.valueOf(rtTime);
         String rtt = String.format("%.0f",rttFloat)+" MS";
         return rtt;
+    }
+
+    public String arp(){
+        List<String> arpTable = new ArrayList<>();
+
+        String command[] = {"arp", "-a"};
+        Process p = null;
+
+        try {
+            p = Runtime.getRuntime().exec(command);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line = null;
+
+        try {
+            while((line = in.readLine()) != null){
+                arpTable.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int devices = 0;
+        for (String item : arpTable) {
+            Matcher m = Pattern.compile("^\\? \\((?:[0-9]{1,3}\\.){3}[0-9]{1,3}\\) at ([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2}).+$").matcher(item);
+            if(m.matches()){
+                devices++;
+            }
+        }
+
+        return ""+devices;
     }
 
 }
