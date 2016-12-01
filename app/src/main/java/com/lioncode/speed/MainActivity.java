@@ -65,6 +65,14 @@ public class MainActivity extends AppCompatActivity {
                 });
                 builder.show();
             }
+        }else{
+            // Find Wifi info
+            WifiInfoTask wifiInfoTask = new WifiInfoTask(this);
+            wifiInfoTask.execute();
+
+            // Start cpu usage handler
+            CpuUsageTask cpuUsageTask = new CpuUsageTask(this);
+            cpuUsageTask.start();
         }
 
     }
@@ -98,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
                     });
                     builder.show();
                 }
-                return;
             }
         }
     }
