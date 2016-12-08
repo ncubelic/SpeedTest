@@ -33,4 +33,5 @@ dependencies {
     compile 'commons-net:commons-net:3.3'
     compile 'com.github.akinaru:speedtest:1.23'
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.7'
+    compile 'com.loopj.android:android-async-http:1.4.9'
 }

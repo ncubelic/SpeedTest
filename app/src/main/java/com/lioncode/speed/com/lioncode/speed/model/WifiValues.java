@@ -10,6 +10,11 @@ public class WifiValues {
     private String frequency;
     private String cpuUsage;
 
+    private String downloadSpeed;
+    private String uploadSpeed;
+
+    private int testType;
+
     public String getSsid() {
         return ssid;
     }
@@ -64,5 +69,29 @@ public class WifiValues {
 
     public void setCpuUsage(String cpuUsage) {
         this.cpuUsage = cpuUsage;
+    }
+
+    public String getUploadSpeed() {
+        return uploadSpeed;
+    }
+
+    public void setUploadSpeed(String uploadSpeed) {
+        this.uploadSpeed = uploadSpeed;
+    }
+
+    public String getDownloadSpeed() {
+        return downloadSpeed;
+    }
+
+    public void setDownloadSpeed(String downloadSpeed) {
+        this.downloadSpeed = downloadSpeed;
+    }
+
+    public int getTestType() {
+        return testType;
+    }
+
+    public void setTestType(int testType) {
+        this.testType = testType;
     }
 }
