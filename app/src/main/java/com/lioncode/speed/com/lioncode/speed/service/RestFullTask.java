@@ -5,6 +5,7 @@ import android.os.Build;
 import android.util.Log;
 
 import com.lioncode.speed.com.lioncode.speed.AndroidNameUtility;
+import com.lioncode.speed.com.lioncode.speed.Constants;
 import com.lioncode.speed.com.lioncode.speed.model.WifiValues;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -46,6 +47,7 @@ public class RestFullTask extends AsyncTask<WifiValues, Void, Void> {
         params.put("downloadSpeed", String.valueOf(values.getDownloadSpeed()));
         params.put("ip", ip);
         params.put("ping",values.getPing());
+        params.put("server", Constants.SPEED_TEST_SERVER_HOST);
 
         RestClient.client.setBasicAuth("dora","w8^x#n6ae#MmPXjz38b8!9Y4k*Nq#_");
         RestClient.post(URL, params, new AsyncHttpResponseHandler() {
