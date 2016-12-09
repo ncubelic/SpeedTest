@@ -33,7 +33,9 @@ public class PingService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        for (String item : pingList){
+            if(item.contains("100% packet loss"))return "~";
+        }
         final String finalLine = pingList.get(pingList.size()-1);
         String [] splitFinalLine = finalLine.split(" = ");
         String rtTime = splitFinalLine[1].substring(0,splitFinalLine[1].indexOf("/"));

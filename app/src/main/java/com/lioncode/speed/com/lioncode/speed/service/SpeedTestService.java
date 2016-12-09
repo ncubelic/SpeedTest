@@ -81,7 +81,6 @@ public class SpeedTestService {
             @Override public void onInterruption() {}
         });
 
-
         speedTestSocket.startDownloadRepeat(Constants.SPEED_TEST_SERVER_HOST, Constants.SPEED_TEST_SERVER_URI_DL,
                 Constants.SPEED_TEST_DURATION, Constants.REPORT_INTERVAL, new
                         IRepeatListener() {

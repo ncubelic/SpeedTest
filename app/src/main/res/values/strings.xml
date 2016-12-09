@@ -3,4 +3,29 @@
     <string name="button_dl_run">TEST DOWNLOAD</string>
     <string name="button_ul_run">TEST UPLOAD</string>
     <string name="button_ul_dl_run">TEST UPLOAD AND DOWNLOAD</string>
+
+    <string-array name="server_names">
+        <item>VIPnet</item>
+        <item>Hrvatski Telekom d.d.</item>
+        <item>Tele2</item>
+        <item>Terrakom</item>
+        <item>Optima Telekom d.d.</item>
+    </string-array>
+
+    <string-array name="server_hosts">
+        <item>lxpspeed1.vipnet.hr</item>
+        <item>speedtest.ht.hr</item>
+        <item>zgb-speedtest-1.tele2.net</item>
+        <item>observium.terrakom.hr/mini</item>
+        <item>speedtest.optinet.hr</item>
+    </string-array>
+
+    <string-array name="server_pings">
+        <item>lxpspeed1.vipnet.hr</item>
+        <item>speedtest.ht.hr</item>
+        <item>zgb-speedtest-1.tele2.net</item>
+        <item>observium.terrakom.hr</item>
+        <item></item>
+    </string-array>
+
 </resources>

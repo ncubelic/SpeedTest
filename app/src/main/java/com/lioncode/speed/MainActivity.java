@@ -1,6 +1,7 @@
 package com.lioncode.speed;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -21,16 +22,14 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.lioncode.speed.com.lioncode.speed.Constants;
 import com.lioncode.speed.com.lioncode.speed.service.CheckInternetConnectionTask;
 import com.lioncode.speed.com.lioncode.speed.service.CpuUsageTask;
 import com.lioncode.speed.com.lioncode.speed.service.PingService;
 import com.lioncode.speed.com.lioncode.speed.service.SpeedTestService;
 import com.lioncode.speed.com.lioncode.speed.service.WifiInfoTask;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_speedtest);
 
+        final Intent intent = new Intent(this, ServerActivity.class);
+
         transparentOverlay = (RelativeLayout) findViewById(R.id.transparentOverlay);
         transparentOverlay.setVisibility(View.INVISIBLE);
 
@@ -69,6 +70,27 @@ public class MainActivity extends AppCompatActivity {
         pingLabel = (TextView) findViewById(R.id.trip_time);
 
         wifiNameLabel = (TextView) findViewById(R.id.wifi_name);
+
+
+        // ACTIONS
+        downloadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(intent, 2);
+            }
+        });
+        uploadDownloadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(intent, 1);
+            }
+        });
+        uploadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(intent, 3);
+            }
+        });
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -101,6 +123,35 @@ public class MainActivity extends AppCompatActivity {
             cpuUsageTask.start();
         }
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK){
+            String serverHost = data.getStringExtra(ServerActivity.RESULT_SERVER);
+            Constants.SPEED_TEST_SERVER_HOST = serverHost;
+
+            String [] split = serverHost.split("/");
+            if(split.length>0){
+                Constants.SPEED_TEST_SERVER_PING_HOST = split[0];
+                Constants.SPEED_TEST_SERVER_HOST = split[0];
+            }
+            if(split.length>1){
+                Constants.SPEED_TEST_SERVER_URI_DL = "/"+split[1]+Constants.SPEED_TEST_SERVER_URI_DL;
+                Constants.SPEED_TEST_SERVER_URI_UL = "/"+split[1]+Constants.SPEED_TEST_SERVER_URI_UL;
+
+            }
+            else{
+                Constants.SPEED_TEST_SERVER_URI_DL = Constants.DL;
+                Constants.SPEED_TEST_SERVER_URI_UL = Constants.UL;
+            }
+
+            if(requestCode == 1)runUploadDownloadTest(null);
+            else if(requestCode == 2)runDownloadTest(null);
+            else if(requestCode == 3)runUploadTest(null);
+
+        }
     }
 
     BroadcastReceiver wifiReceiver = new BroadcastReceiver() {
