@@ -13,6 +13,8 @@ public class WifiValues {
     private String downloadSpeed;
     private String uploadSpeed;
 
+    private String ping;
+
     private int testType;
 
     public String getSsid() {
@@ -93,5 +95,13 @@ public class WifiValues {
 
     public void setTestType(int testType) {
         this.testType = testType;
+    }
+
+    public String getPing() {
+        return ping;
+    }
+
+    public void setPing(String ping) {
+        this.ping = ping;
     }
 }

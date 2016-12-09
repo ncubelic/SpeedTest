@@ -44,6 +44,7 @@ public class RestUploadTask extends AsyncTask<WifiValues, Void, Void> {
         params.put("testType", String.valueOf(values.getTestType()));
         params.put("uploadSpeed", String.valueOf(values.getUploadSpeed()));
         params.put("ip", ip);
+        params.put("ping",values.getPing());
 
         RestClient.client.setBasicAuth("dora","w8^x#n6ae#MmPXjz38b8!9Y4k*Nq#_");
         RestClient.post(URL, params, new AsyncHttpResponseHandler() {

@@ -45,6 +45,7 @@ public class RestFullTask extends AsyncTask<WifiValues, Void, Void> {
         params.put("uploadSpeed", String.valueOf(values.getUploadSpeed()));
         params.put("downloadSpeed", String.valueOf(values.getDownloadSpeed()));
         params.put("ip", ip);
+        params.put("ping",values.getPing());
 
         RestClient.client.setBasicAuth("dora","w8^x#n6ae#MmPXjz38b8!9Y4k*Nq#_");
         RestClient.post(URL, params, new AsyncHttpResponseHandler() {

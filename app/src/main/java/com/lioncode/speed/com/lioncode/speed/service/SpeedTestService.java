@@ -32,6 +32,7 @@ public class SpeedTestService {
     private TextView channelLabel;
     private TextView encryptionLabel;
     private TextView frequencyLabel;
+    private TextView ping;
 
     private Button downloadBtn;
     private Button uploadBtn;
@@ -52,6 +53,7 @@ public class SpeedTestService {
         channelLabel = (TextView) activity.findViewById(R.id.wifi_channel);
         encryptionLabel = (TextView) activity.findViewById(R.id.wifi_encryption);
         frequencyLabel = (TextView) activity.findViewById(R.id.wifi_freq);
+        ping = (TextView) activity.findViewById(R.id.trip_time);
     }
 
 
@@ -111,6 +113,7 @@ public class SpeedTestService {
                                 wifiValues.setStrength(String.valueOf(strengthLabel.getText()));
                                 wifiValues.setDownloadSpeed(result.toString());
                                 wifiValues.setTestType(2);
+                                wifiValues.setPing(String.valueOf(ping.getText()));
 
                                 new RestDownloadTask().execute(wifiValues);
                             }
@@ -174,6 +177,7 @@ public class SpeedTestService {
                         wifiValues.setStrength(String.valueOf(strengthLabel.getText()));
                         wifiValues.setUploadSpeed(result.toString());
                         wifiValues.setTestType(3);
+                        wifiValues.setPing(String.valueOf(ping.getText()));
 
                         new RestUploadTask().execute(wifiValues);
                     }
@@ -242,6 +246,7 @@ public class SpeedTestService {
                         wifiValues.setChannel(String.valueOf(channelLabel.getText()));
                         wifiValues.setStrength(String.valueOf(strengthLabel.getText()));
                         wifiValues.setDownloadSpeed(result.toString());
+                        wifiValues.setPing(String.valueOf(ping.getText()));
 
                         speedTestSocket.startUploadRepeat(Constants.SPEED_TEST_SERVER_HOST,
                                 Constants.SPEED_TEST_SERVER_URI_UL, Constants.SPEED_TEST_DURATION,
