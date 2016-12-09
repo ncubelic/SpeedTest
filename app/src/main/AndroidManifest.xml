@@ -19,7 +19,6 @@
         <!-- Receive Wi-Fi connection state changes -->
         <receiver android:name=".WifiReceiver">
             <intent-filter>
-                <!--<action android:name="android.net.wifi.STATE_CHANGE" />-->
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>

@@ -19,12 +19,18 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.lioncode.speed.com.lioncode.speed.service.CheckInternetConnectionTask;
 import com.lioncode.speed.com.lioncode.speed.service.CpuUsageTask;
 import com.lioncode.speed.com.lioncode.speed.service.PingService;
 import com.lioncode.speed.com.lioncode.speed.service.SpeedTestService;
 import com.lioncode.speed.com.lioncode.speed.service.WifiInfoTask;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean connected;
 
+    private RelativeLayout transparentOverlay;
+
     //public static MainActivity mainActivity;
 
     @Override
@@ -50,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(wifiReceiver, new IntentFilter("CONNECTION_LOST"));
 
         setContentView(R.layout.activity_speedtest);
+
+        transparentOverlay = (RelativeLayout) findViewById(R.id.transparentOverlay);
+        transparentOverlay.setVisibility(View.INVISIBLE);
 
         downloadBtn = (Button) findViewById(R.id.button_dl);
         uploadBtn = (Button) findViewById(R.id.button_ul);
@@ -103,13 +114,13 @@ public class MainActivity extends AppCompatActivity {
                 downloadBtn.setEnabled(true);
                 uploadBtn.setEnabled(true);
                 uploadDownloadBtn.setEnabled(true);
+                new CheckInternetConnectionTask(context).execute();
             }
             else{
                 wifiNameLabel.setText("No connection");
                 downloadBtn.setEnabled(false);
                 uploadBtn.setEnabled(false);
                 uploadDownloadBtn.setEnabled(false);
-
                 Log.d("No","No connection");
             }
         }

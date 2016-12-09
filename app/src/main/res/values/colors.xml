@@ -12,6 +12,6 @@
     <color name="colorRed3">#F9999B</color>
     <color name="colorGreen">#63A69F</color>
     <color name="colorGreen3">#61D990</color>
-
+    <color name="red_transparent">#c0000000</color>
     <color name="white">#FFFFFF</color>
 </resources>
